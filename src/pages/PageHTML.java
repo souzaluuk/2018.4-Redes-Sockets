@@ -20,6 +20,8 @@ public class PageHTML{
         StringBuilder header_http = new StringBuilder();
         String data = "";
         
+        System.out.println("File: "+DIR_PAGES+getNameFile());
+        
         if (file.isDirectory()){
             file = new File(DIR_PAGES+getNameFile()+"index.html");
         }
@@ -28,7 +30,8 @@ public class PageHTML{
             
             header_http.append("HTTP/1.1 200 OK\n")
                     .append("Content-Length: ").append(data.length()-1).append('\n')
-                    .append("Content-Type: text/html\n")
+                    .append("Content-Type: text/html; charset=utf-8;\n")
+                    .append("Content-Language: pt-br")
                     .append("Server: Kelly & Lucas\n")
                     .append("\n")
                     .append(data);
