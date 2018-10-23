@@ -62,6 +62,8 @@ public class TCPServerHTTP {
                 System.out.print(page.getPageHTML());
                 
                 outClient.writeBytes(page.getPageHTML());
+                
+                client.close();
             } catch (Exception e) {
             }
         }
