@@ -7,7 +7,6 @@ public class Main {
         //server.startServer();
         
         UDPServerDNS serverUDP = new UDPServerDNS(8080);
-        
         serverUDP.startServer();
     }
 }
