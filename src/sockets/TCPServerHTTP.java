@@ -48,27 +48,20 @@ public class TCPServerHTTP {
                                 new InputStreamReader(
                                         client.getInputStream()));
                 //Client output
-                BufferedWriter outClient =
-                        new BufferedWriter(
-                                new OutputStreamWriter(
-                                        client.getOutputStream()));
+                DataOutputStream outClient =
+                        new DataOutputStream(client.getOutputStream());
                 /**Read line request
                  * e.g: GET /example.html HTTP/1.1
                 */
                 clientRequest = inClient.readLine();
-                //System.out.println("\nIP Client: "+client.getInetAddress());
-                //System.out.println("Request: "+clientRequest);
+                System.out.println("\nIP Client: "+client.getInetAddress());
+                System.out.println("Request: "+clientRequest);
                 
                 PageHTML page = new PageHTML(clientRequest);
                 
-                //System.out.println(page.getPageHTML());
+                System.out.print(page.getPageHTML());
                 
-                //clientResponse = page.getPageHTML();
-                
-                outClient.write(page.getPageHTML());
-                System.out.println(page.getPageHTML());
-                inClient.close();
-                outClient.close();
+                outClient.writeBytes(page.getPageHTML());
             } catch (Exception e) {
             }
         }

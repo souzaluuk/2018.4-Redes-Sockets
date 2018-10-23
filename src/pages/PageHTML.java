@@ -2,6 +2,7 @@ package pages;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Arrays;
 import java.util.HashMap;
 
 //request: GET /example.html HTTP/1.1
@@ -103,29 +104,37 @@ public class PageHTML{
     
     private HashMap<String,Integer> getArgs(){
         HashMap<String,Integer> args = new HashMap<>();
-        String part_args = this.request.split("\\?")[1];
+        String[] part_args = this.request.split("\\?");
+        
+        if (part_args.length < 2){
+            return args;
+        }
         
         String[] split_tmp;
         String name_arg;
         int value_arg;
         try {
-            for (String str : part_args.split("&")) {
+            for (String str : part_args[1].split("&")) {
+                System.out.println("ok");
                 if (correctArg(str)){
                     split_tmp = str.split("=");
                     name_arg = split_tmp[0];
                     value_arg = Integer.parseInt(split_tmp[1]);
                     
                     args.put(name_arg, value_arg);
+                }else{
+                    return new HashMap<>();
                 }
             }
             return args;
         } catch (NumberFormatException e) {
             System.out.println(e.toString());
-            return null;
+            return args;
         }
     }
     
     private boolean correctArg(String arg){
-        return arg.matches("num\\d=\\d*");
+        String[] split_arg = arg.split("\\=");
+        return (split_arg.length > 1 && !split_arg[1].isEmpty());
     }
 }
