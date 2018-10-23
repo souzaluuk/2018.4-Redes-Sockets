@@ -2,7 +2,6 @@ package pages;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.Arrays;
 import java.util.HashMap;
 
 //request: GET /example.html HTTP/1.1
@@ -36,15 +35,6 @@ public class PageHTML{
             
             return header_http.toString();
         }else{
-            /*header_http.append("HTTP/1.1 404 Not Found\n")
-                    .append("Connection: Keep-Alive\n")
-                    .append("Content-Length: 0\n")
-                    .append("Content-Type: text/html\n")
-                    //.append("Date: ").append(format_date.format(current_date)).append('\n')
-                    .append("Keep-Alive: timeout=3, max=1000\n")
-                    .append("Last-Modified: ").append(file.lastModified()).append('\n')
-                    .append("Server: Kelly & Lucas\n")
-                    .append("\n");*/
             header_http.append("HTTP/1.1 404 Not Found\n")
                     .append("Connection: Keep-Alive\n")
                     .append("Content-Length: ").append(file.length()).append('\n')
@@ -115,7 +105,6 @@ public class PageHTML{
         int value_arg;
         try {
             for (String str : part_args[1].split("&")) {
-                System.out.println("ok");
                 if (correctArg(str)){
                     split_tmp = str.split("=");
                     name_arg = split_tmp[0];

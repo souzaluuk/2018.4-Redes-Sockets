@@ -1,14 +1,13 @@
-
-import pages.PageHTML;
-import sockets.TCPServerHTTP;
-
+import sockets.TCP.TCPServerHTTP;
+import sockets.UDP.UDPServerDNS;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        //System.out.println(new PageHTML("GET /index.html HTTP/1.1").getPageHTML());
+        //TCPServerHTTP serverTCP = new TCPServerHTTP(80);
+        //server.startServer();
         
-        TCPServerHTTP server = new TCPServerHTTP(8080);
+        UDPServerDNS serverUDP = new UDPServerDNS(8080);
         
-        server.startServer();
+        serverUDP.startServer();
     }
 }

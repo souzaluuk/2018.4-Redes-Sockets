@@ -1,4 +1,4 @@
-package sockets;
+package sockets.TCP;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -18,6 +18,7 @@ public class TCPServerHTTP {
         if (Objects.isNull(server)){
             server = new ServerSocket(this.port); //New ServerSocket instance
             System.out.println("Server listening in the port "+this.port);
+            System.out.println("Acess in localhost:"+this.port);
             listen();
         }else{
             System.out.println("Server listening in the port "+this.port);
@@ -26,14 +27,13 @@ public class TCPServerHTTP {
     
     private void listen() throws IOException{
         while(true){
-            new Response(server.accept()).start();
+            new Response(server.accept()).start(); //Start responses Threads
         }
     }
     
     private class Response extends Thread{ //Extends for multi clients
         private final Socket client;
         private String clientRequest;
-        private String clientResponse;
 
         public Response(Socket client) {
             this.client = client;
@@ -50,6 +50,7 @@ public class TCPServerHTTP {
                 //Client output
                 DataOutputStream outClient =
                         new DataOutputStream(client.getOutputStream());
+                
                 /**Read line request
                  * e.g: GET /example.html HTTP/1.1
                 */
@@ -58,13 +59,12 @@ public class TCPServerHTTP {
                 System.out.println("Request: "+clientRequest);
                 
                 PageHTML page = new PageHTML(clientRequest);
-                
-                System.out.print(page.getPageHTML());
-                
+                //System.out.print(page.getPageHTML());                
                 outClient.writeBytes(page.getPageHTML());
                 
                 client.close();
             } catch (Exception e) {
+                System.out.println(e.toString());
             }
         }
     }
