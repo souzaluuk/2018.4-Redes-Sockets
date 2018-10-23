@@ -3,10 +3,8 @@ package sockets;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
+import pages.PageHTML;
 
 public class TCPServerHTTP {
     private static ServerSocket server = null;
@@ -35,7 +33,7 @@ public class TCPServerHTTP {
     private class Response extends Thread{ //Extends for multi clients
         private final Socket client;
         private String clientRequest;
-        private StringBuilder clientResponse;
+        private String clientResponse;
 
         public Response(Socket client) {
             this.client = client;
@@ -58,11 +56,19 @@ public class TCPServerHTTP {
                  * e.g: GET /example.html HTTP/1.1
                 */
                 clientRequest = inClient.readLine();
+                //System.out.println("\nIP Client: "+client.getInetAddress());
+                //System.out.println("Request: "+clientRequest);
                 
-                System.out.println("\nIP Client: "+client.getInetAddress());
-                System.out.println("Request: "+clientRequest);
+                PageHTML page = new PageHTML(clientRequest);
                 
-                //clientResponse = get
+                //System.out.println(page.getPageHTML());
+                
+                //clientResponse = page.getPageHTML();
+                
+                outClient.write(page.getPageHTML());
+                System.out.println(page.getPageHTML());
+                inClient.close();
+                outClient.close();
             } catch (Exception e) {
             }
         }

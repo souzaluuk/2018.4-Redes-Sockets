@@ -1,7 +1,6 @@
 package pages;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;
 
@@ -16,31 +15,42 @@ public class PageHTML{
         this.request = this.getURL(request);
     }
     
-    public String getPageHTML() throws FileNotFoundException{
+    public String getPageHTML() throws Exception{
         File file = new File(DIR_PAGES+getNameFile());
         StringBuilder header_http = new StringBuilder();
-        StringBuilder data = new StringBuilder();
+        String data = "";
         
         if (file.isDirectory()){
             file = new File(DIR_PAGES+getNameFile()+"index.html");
         }
         if (file.exists() && file.isFile()){
-            data = getTextFile(file);
+            data = replacePage(file.getName(),getTextFile(file));
+            
             header_http.append("HTTP/1.1 200 OK\n")
-                    .append("Content-Length: ").append(header_http.length()-1).append('\n')
+                    .append("Content-Length: ").append(data.length()-1).append('\n')
                     .append("Content-Type: text/html\n")
-                    .append("Server: Kelly & Lucas\\n")
-                    .append("\n");
+                    .append("Server: Kelly & Lucas\n")
+                    .append("\n")
+                    .append(data);
             
             return header_http.toString();
         }else{
-            header_http.append("HTTP/1.1 404 Not Found\n")
-                    //.append("Connection: Keep-Alive\n")
+            /*header_http.append("HTTP/1.1 404 Not Found\n")
+                    .append("Connection: Keep-Alive\n")
                     .append("Content-Length: 0\n")
-                    //.append("Content-Type: text/html\n")
+                    .append("Content-Type: text/html\n")
                     //.append("Date: ").append(format_date.format(current_date)).append('\n')
-                    //.append("Keep-Alive: timeout=3, max=1000\n")
-                    //.append("Last-Modified: ").append(file.lastModified()).append('\n')
+                    .append("Keep-Alive: timeout=3, max=1000\n")
+                    .append("Last-Modified: ").append(file.lastModified()).append('\n')
+                    .append("Server: Kelly & Lucas\n")
+                    .append("\n");*/
+            header_http.append("HTTP/1.1 404 Not Found\n")
+                    .append("Connection: Keep-Alive\n")
+                    .append("Content-Length: ").append(file.length()).append('\n')
+                    .append("Content-Type: text/html\n")
+                    .append("Date: ")//.append(format_date.format(current_date)).append('\n')
+                    .append("Keep-Alive: timeout=3, max=1000\n")
+                    .append("Last-Modified: ").append(file.lastModified()).append('\n')
                     .append("Server: Kelly & Lucas\n")
                     .append("\n");
             
@@ -48,9 +58,39 @@ public class PageHTML{
         }
     }
     
-    private StringBuilder getTextFile(File file) throws FileNotFoundException{
+    private String replacePage(String name_file, String text_file){
+        HashMap<String,Integer> args = getArgs();
+        
+        try {
+            if (name_file.equals("result.html") && args.size() > 1){
+                int num1 = args.get("num1");
+                int num2 = args.get("num2");
+                int result = num1+num2;
+                
+                return text_file.replaceAll("\\{num1\\}", num1+"")
+                         .replaceAll("\\{num2\\}", num2+"")
+                         .replaceAll("\\{result\\}", result+"");
+            }
+        } catch (Exception e) {
+            System.err.println(e.toString());
+            System.err.println("Invalid arguments");
+            return text_file;
+        }
+        
+        return text_file;
+    }
+    
+    private String getTextFile(File file) throws Exception{
         BufferedReader buffer_file = new BufferedReader(new FileReader(file));
-        return null;
+        StringBuilder text = new StringBuilder();
+        String line;
+        
+        while((line = buffer_file.readLine()) != null){
+            text.append(line).append("\n");
+        }
+        
+        buffer_file.close();
+        return text.toString();
     }
     
     private String getURL(String request){
