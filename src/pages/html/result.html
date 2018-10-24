@@ -3,13 +3,81 @@
         <title>Resultado</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                font-family:Arial;
+                line-height:1.6;
+                background:#eee;
+            }
+            .li {
+                list-style: disc;
+            }
+            .main-inner {
+                background: #fff;
+                width:400px;
+                margin:60px auto;
+                position:relative;
+                padding: 30px 40px;
+                box-shadow: 3px 2px 4px #A9A9A9;
+            }
+            .p {
+                margin-bottom:7px;
+                color:#4F4F4F;
+            }
+            .campo-texto {
+                border:1px solid #ccc;
+                background:#fff;
+                padding:5px 15px;
+                border-radius:5px;
+                color:#4F4F4F;
+                font-family:Arial;
+                font-size:14px;
+                width:100px;
+            }
+            .plus {
+                background:#CD3333;
+                color:#fff;
+                padding:5px 10px;
+                text-align:center;
+                margin:0 10px;
+                width:30px;
+                height:30px;
+                border-radius:100%;
+            }
+            .btn-envio {
+                background:#CD3333;
+                color:#fff;
+                border:none;
+                padding:5px 15px;
+                cursor: pointer;
+                border-radius:3px;
+                font-size:14px;
+                margin: 0 0 0 10px;
+                text-transform: uppercase;
+                text-decoration:none;
+            }
+            .btn-envio:hover {
+                background:#8B2323;
+                color:#fff;
+                border:none; 
+            }
+            h2 {
+               color:#8B2323; 
+               text-align:center;
+               padding: 0 0 15px 0;
+               border-bottom:1px dashed #ccc;
+            }
+        </style>
     </head>
     <body>
-        <div>
-            Valor 1: {num1}<br>
-            Valor 2: {num2}<br>
-            Resultado: {num1}+{num2}={result}<br>
+        <div class="main-inner">
+            <h2>Resultado</h2>
+            <b>Valor 1:</b> {num1}<br>
+            <b>Valor 2:</b> {num2}<br><br>
+            <b>Resultado:</b> {num1} + {num2} = {result}<br/>
+            <br/>
+            <a href="index.html" class="btn-envio" style="float:right;">Voltar</a><br/><br/>
+            
         </div>
-        <a href="index.html">Voltar</a>
     </body>
 </html>
