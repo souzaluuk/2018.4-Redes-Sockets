@@ -1,6 +1,4 @@
 import sockets.TCP.TCPServerHTTP;
-import sockets.UDP.UDPClientDNS;
-import sockets.UDP.UDPServerDNS;
 
 public class Main {
     public static void main(String[] args) throws Exception {
