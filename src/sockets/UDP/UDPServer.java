@@ -1,7 +1,6 @@
 package sockets.UDP;
 
 import java.net.*;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -16,9 +15,13 @@ public class UDPServer {
     
     private void initNames(){
         names.put("www.souzaluuk.org", "200.896.45.185");
+        names.put("souzaluuk.org", "200.896.45.185");
         names.put("www.kellydosocorro.com", "200.196.84.462");
+        names.put("kellydosocorro.com", "200.196.84.462");
         names.put("www.site.com.br", "200.746.32.127");
+        names.put("site.com.br", "200.746.32.127");
         names.put("funcoeszz.net", "200.650.89.156");
+        names.put("www.funcoeszz.net", "200.650.89.156");
     }
     
     public void startServer() throws Exception{
@@ -33,11 +36,11 @@ public class UDPServer {
         }
     }
     
-    private void listen() throws Exception{
-        byte[] receiveData = new byte[1024];
-        byte[] sendData = new byte[1024];
-        
+    private void listen() throws Exception{        
         while(true){
+            byte[] receiveData = new byte[1024];
+            byte[] sendData;
+            
             DatagramPacket receivePacket =
                     new DatagramPacket(receiveData,receiveData.length);
             
@@ -50,7 +53,7 @@ public class UDPServer {
             
             String capitalizedSentence = "Not found";
             
-            String name_only = getNameOnly(sentence);            
+            String name_only = getNameOnly(sentence);
             System.out.println("Request: "+name_only);
             
             if (names.containsKey(name_only)){
@@ -63,9 +66,9 @@ public class UDPServer {
                     new DatagramPacket(sendData,
                             sendData.length, IPAddress, port_packet);
             
-            System.out.print("Sending " + capitalizedSentence + "...");
-            
+            System.out.println("Sending " + capitalizedSentence + "...\n");            
             server.send(sendPacket);
+            
         }
     }
     

@@ -7,8 +7,8 @@ import java.util.HashMap;
 //request: GET /example.html HTTP/1.1
 public class PageHTML{
     private final String sp = System.getProperty("file.separator");
-    private final String user_dir = System.getProperty("user.dir");
-    private final String DIR_PAGES = user_dir+sp+"src"+sp+"pages"+sp+"html";
+    private final String current_folder = System.getProperty("user.dir");
+    private final String DIR_PAGES = current_folder+sp+"src"+sp+"pages"+sp+"html";
     private final String request;
 
     public PageHTML(String request) {
@@ -21,6 +21,7 @@ public class PageHTML{
         String data = "";
         
         System.out.println("File: "+DIR_PAGES+getNameFile());
+        //System.out.println("File: "+this.getClass().getResource("html/index.html"));
         
         if (file.isDirectory()){
             file = new File(DIR_PAGES+getNameFile()+"index.html");

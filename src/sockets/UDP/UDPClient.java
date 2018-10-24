@@ -4,39 +4,47 @@ import java.io.*;
 import java.net.*;
  
 public class UDPClient {
-	public static void main(String args[]) throws Exception {
-		BufferedReader inFromUser = 
-                        new BufferedReader(new InputStreamReader(System.in));
+    private static DatagramSocket client = null;
+    private final int port;
+    private final String hostname_server;
+    private final String domain_request;
+
+    public UDPClient(int port, String hostname_server, String domain_request) {
+        this.port = port;
+        this.hostname_server = hostname_server;
+        this.domain_request = domain_request;
+    }
+    
+    public void startClient() throws Exception{
+        client = new DatagramSocket();
+        sendDomain();
+    }
+    
+    private void sendDomain() throws Exception{
+		InetAddress IPAddress = InetAddress.getByName(this.hostname_server);
  
-		DatagramSocket clientSocket = new DatagramSocket();
- 
-		String servidor = "127.0.0.1";
-		int porta = 8080;
- 
-		InetAddress IPAddress = InetAddress.getByName(servidor);
- 
-		byte[] sendData = new byte[1024];
 		byte[] receiveData = new byte[1024];
+                byte[] sendData;
+		
+		sendData = this.domain_request.getBytes();
+                
+		DatagramPacket sendPacket = 
+                        new DatagramPacket(sendData,
+                                sendData.length,IPAddress, this.port);
  
-		System.out.println("Digite o texto a ser enviado ao servidor: ");
-		String sentence = inFromUser.readLine();
-		sendData = sentence.getBytes();
-		DatagramPacket sendPacket = new DatagramPacket(sendData,
-				sendData.length, IPAddress, porta);
- 
-		System.out.println("Enviando pacote UDP para " + servidor + ":" + porta);
-		clientSocket.send(sendPacket);
- 
+		System.out.println("Server UDP: " + hostname_server + ":" + port);
+                
+		client.send(sendPacket);
+                
 		DatagramPacket receivePacket = new DatagramPacket(receiveData,
 				receiveData.length);
- 
-		clientSocket.receive(receivePacket);
-		System.out.println("Pacote UDP recebido...");
- 
+                
+		client.receive(receivePacket);
+                
 		String modifiedSentence = new String(receivePacket.getData());
- 
-		System.out.println("Texto recebido do servidor:" + modifiedSentence);
-		clientSocket.close();
-		System.out.println("Socket cliente fechado!");
-	}
+                
+                System.out.println("Domain: " + domain_request);
+		System.out.println("Address: " + modifiedSentence.split("\0")[0]);
+		client.close();
+    }
 }
