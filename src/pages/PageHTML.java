@@ -88,7 +88,7 @@ public class PageHTML{
     }
     
     private String getURL(String request){
-        return request.split(" ")[1].replace('/', '\\');
+        return request.split(" ")[1].replace("/", this.sp);
     }
     
     private String getNameFile(){
