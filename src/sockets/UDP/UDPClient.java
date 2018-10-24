@@ -3,16 +3,15 @@ package sockets.UDP;
 import java.io.*;
 import java.net.*;
  
-class UDPClient {
+public class UDPClient {
 	public static void main(String args[]) throws Exception {
- 
-		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(
-				System.in));
+		BufferedReader inFromUser = 
+                        new BufferedReader(new InputStreamReader(System.in));
  
 		DatagramSocket clientSocket = new DatagramSocket();
  
-		String servidor = "localhost";
-		int porta = 9876;
+		String servidor = "127.0.0.1";
+		int porta = 8080;
  
 		InetAddress IPAddress = InetAddress.getByName(servidor);
  
@@ -25,8 +24,7 @@ class UDPClient {
 		DatagramPacket sendPacket = new DatagramPacket(sendData,
 				sendData.length, IPAddress, porta);
  
-		System.out
-				.println("Enviando pacote UDP para " + servidor + ":" + porta);
+		System.out.println("Enviando pacote UDP para " + servidor + ":" + porta);
 		clientSocket.send(sendPacket);
  
 		DatagramPacket receivePacket = new DatagramPacket(receiveData,

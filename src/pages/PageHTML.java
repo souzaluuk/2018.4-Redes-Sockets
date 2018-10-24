@@ -30,8 +30,8 @@ public class PageHTML{
             
             header_http.append("HTTP/1.1 200 OK\n")
                     .append("Content-Length: ").append(data.length()-1).append('\n')
-                    .append("Content-Type: text/html; charset=utf-8;\n")
-                    .append("Content-Language: pt-br")
+                    .append("Content-Type: text/html; charset=utf-8\n")
+                    .append("Content-Language: pt-br\n")
                     .append("Server: Kelly & Lucas\n")
                     .append("\n")
                     .append(data);

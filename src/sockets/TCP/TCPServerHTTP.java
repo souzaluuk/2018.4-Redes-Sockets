@@ -17,11 +17,11 @@ public class TCPServerHTTP {
     public void startServer() throws IOException{
         if (Objects.isNull(server)){
             server = new ServerSocket(this.port); //New ServerSocket instance
-            System.out.println("Server listening in the port "+this.port);
+            System.out.println("Server TCP listening in the port "+this.port);
             System.out.println("Acess in localhost:"+this.port);
             listen();
         }else{
-            System.out.println("Server listening in the port "+this.port);
+            System.out.println("Server TCP listening in the port "+this.port);
         }
     }
     
@@ -59,7 +59,7 @@ public class TCPServerHTTP {
                 System.out.println("Request: "+clientRequest);
                 
                 PageHTML page = new PageHTML(clientRequest);
-                //System.out.print(page.getPageHTML());                
+                //System.out.print(page.getPageHTML());
                 outClient.writeBytes(page.getPageHTML());
                 
                 client.close();
